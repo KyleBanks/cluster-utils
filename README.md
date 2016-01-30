@@ -5,17 +5,17 @@
 
 The `cluster-utils` module aims to provide a variety of utilities for applications that run in clustered environments, either through the [cluster](https://nodejs.org/api/cluster.html) module, or distributed systems running in cloud based environments such as AWS.
 
-### Installation
+## Installation
 
 ```
 npm install --save cluster-utils
 ```
 
-### Dependencies
+## Dependencies
 
 `cluster-utils` requires an initialized [redis client](https://github.com/NodeRedis/node_redis) in order to synchronize tasks across the cluster. 
 
-### Usage
+## Usage
 
 ```node
 var redisClient = require('redis').createClient();
@@ -23,7 +23,7 @@ var redisClient = require('redis').createClient();
 var clusterUtils = require('cluster-utils')(redisClient);
 ```
 
-#### * clusterUtils.setTimeout(name, function, delay)
+#### clusterUtils.setTimeout(name, function, delay)
 
 * `name`: A name used to identify this timeout function throughout the cluster. All application instances in the cluster should use the same function name for the same function.
 * `function`: The function to be executed.
@@ -41,7 +41,7 @@ clusterUtils.setTimeout("Send Marketing Emails", function() {
 
 In the example above, if you had a cluster of application instances all register the `Send Marketing Emails` function, only one in the cluster would execute.
 
-#### * clusterUtils.config.setDefaultLockTimeout(timeout)
+#### clusterUtils.config.setDefaultLockTimeout(timeout)
 
 * `timeout` **(default: 10)**: The time, in seconds, that all subsequent locks will expire after.
 
@@ -63,14 +63,14 @@ Test cases can be executed like so:
 npm test
 ```
 
-### Author
+## Author
 
-#### Kyle Banks
+### Kyle Banks
 - http://kylewbanks.com
 - https://github.com/KyleBanks
 - https://twitter.com/kylewbanks
 
-### License
+## License
 ```
 The MIT License (MIT)
 
