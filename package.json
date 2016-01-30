@@ -1,6 +1,6 @@
 {
   "name": "cluster-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A collection of utilities for clustered applications.",
   "main": "index.js",
   "scripts": {
