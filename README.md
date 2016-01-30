@@ -22,7 +22,7 @@ var redisClient = require('redis').createClient();
 var clusterUtils = require('cluster-utils')(redisClient);
 ```
 
-#### clusterUtils.setTimeout(name, function, delay)
+#### * clusterUtils.setTimeout(name, function, delay)
 
 * `name`: A name used to identify this timeout function throughout the cluster. All application instances in the cluster should use the same function name for the same function.
 * `function`: The function to be executed.
@@ -40,7 +40,7 @@ clusterUtils.setTimeout("Send Marketing Emails", function() {
 
 In the example above, if you had a cluster of application instances all register the `Send Marketing Emails` function, only one in the cluster would execute.
 
-#### clusterUtils.config.setDefaultLockTimeout(timeout)
+#### * clusterUtils.config.setDefaultLockTimeout(timeout)
 
 * `timeout` **(default: 10)**: The time, in seconds, that all subsequent locks will expire after.
 
