@@ -1,6 +1,7 @@
 # cluster-utils
 
 [![npm version](https://badge.fury.io/js/cluster-utils.svg)](http://badge.fury.io/js/cluster-utils)
+[![travis](https://travis-ci.org/KyleBanks/cluster-utils.svg?branch=master)](https://travis-ci.org/KyleBanks/cluster-utils.svg?branch=master)
 
 The `cluster-utils` module aims to provide a variety of utilities for applications that run in clustered environments, either through the [cluster](https://nodejs.org/api/cluster.html) module, or distributed systems running in cloud based environments such as AWS.
 
