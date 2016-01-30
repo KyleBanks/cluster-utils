@@ -20,6 +20,8 @@ var FileName = 'lib/Timeout';
 
 describe(FileName, function() {
 
+    // Note: The vast majority of the Timeout class is tested via the `ClusterUtils.test` suite
+
     var Timeout = null;
 
     it('requires without error', function(done) {
@@ -29,6 +31,7 @@ describe(FileName, function() {
 
     it('exports a constructor', function(done) {
         Timeout.should.be.a('function');
+        Timeout.name.should.equal("Timeout");
         done();
     });
 
