@@ -28,6 +28,9 @@ describe(FileName, function() {
         redisClient = redis.createClient(),
         clusterUtils = null;
 
+    /**
+     * Initialization
+     */
     it('requires without error', function(done) {
         ClusterUtils = require(path.join(process.cwd(), FileName));
         done();
@@ -54,6 +57,10 @@ describe(FileName, function() {
         clusterUtils.setTimeout.should.be.a('function');
         done();
     });
+
+    /**
+     * Private Functions
+     */
 
     var lockKey = "LK:" + new Date().getTime();
     describe('_setLock', function() {
@@ -126,6 +133,79 @@ describe(FileName, function() {
             clusterUtils._clearLock("UnknownLockKey", done);
         });
     });
+
+    /**
+     * Public Functions
+     */
+
+    describe('setTimeout', function() {
+        function _getRandomTimeoutName() {
+            return new Date().getTime().toString();
+        }
+
+        it('executes a simple function after a specified delay', function(done) {
+            clusterUtils.setTimeout(_getRandomTimeoutName(), done, 10);
+        });
+
+        it('returns an object representing the timeout', function(done) {
+            var timeout = clusterUtils.setTimeout(_getRandomTimeoutName(), done, 10);
+
+            timeout.should.be.a('object');
+        });
+
+        it('return value contains the lock key', function(done) {
+            var functionName = _getRandomTimeoutName();
+            var timeout = clusterUtils.setTimeout(functionName, done, 10);
+
+            timeout.lockKey.should.be.a('string');
+            timeout.lockKey.indexOf(functionName).should.be.at.least(0);
+        });
+
+        it('return value contains the `setTimeout` ID', function(done) {
+            var timeout = clusterUtils.setTimeout(_getRandomTimeoutName(), done, 10);
+
+            timeout.timeoutId.should.be.a('object');
+        });
+
+        it('executes only one function with the given timeout name', function(done) {
+            var timeoutName = _getRandomTimeoutName(),
+                callCount = 0;
+
+            // Ten functions with the same name, only one should be called
+            for (var i = 0; i < 10; i++) {
+                clusterUtils.setTimeout(timeoutName, function() {
+                    callCount ++;
+                }, 1);
+            }
+
+            setTimeout(function() {
+                callCount.should.equal(1);
+                done();
+            }, 15);
+        });
+
+        it('executes all functions when they have different names', function(done) {
+            var numFunctions = 10,
+                callCount = 0,
+                baseFunctionName = _getRandomTimeoutName();
+
+            for (var i = 0; i < numFunctions; i++) {
+                clusterUtils.setTimeout(baseFunctionName + i, function() {
+                    callCount ++;
+                }, 1);
+            }
+
+            setTimeout(function() {
+                callCount.should.equal(numFunctions);
+                done();
+            }, 15);
+        });
+
+    });
+
+    /**
+     * Configuration
+     */
 
     describe('config', function() {
         it('contains functions allowing configuration of the cluster utils', function(done) {
